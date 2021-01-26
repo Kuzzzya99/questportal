@@ -1,0 +1,425 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-1.yaml
+  - changeSet:
+      id: 1 #create table users
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: phone_number
+                  type: varchar(50)
+
+  - changeSet:
+      id: 2 #create table with enums
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 3 #create table user role
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames:  user_id
+            baseTableName:   user_role
+            constraintName: fk_user_id_role
+            referencedColumnNames:  id
+            referencedTableName:  users
+        - addForeignKeyConstraint:
+            baseColumnNames:  role_id
+            baseTableName:   user_role
+            constraintName: fk_role_id_user
+            referencedColumnNames:  id
+            referencedTableName:  role
+  - changeSet:
+      id: 4 #insert data in table user roles
+      author: kuzzzya99
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role
+                  value: "admin"
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role
+                  value: "user"
+
+  - changeSet:
+      id: 5 #create table fields
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: fields
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: label
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: required
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 6 #create table with enums of types
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: type
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 7 #insert data in table field_type
+      author: kuzzzya99
+      changes:
+        - insert:
+            tableName: type
+            columns:
+              - column:
+                  name: type
+                  value: "single_text"
+        - insert:
+            tableName: type
+            columns:
+              - column:
+                  name: type
+                  value: "multiline_text"
+        - insert:
+            tableName: type
+            columns:
+              - column:
+                  name: type
+                  value: "radio"
+        - insert:
+            tableName: type
+            columns:
+              - column:
+                  name: type
+                  value: "checkbox"
+        - insert:
+            tableName: type
+            columns:
+              - column:
+                  name: type
+                  value: "combobox"
+        - insert:
+            tableName: type
+            columns:
+              - column:
+                  name: type
+                  value: "date"
+
+  - changeSet:
+        id: 8 #create table options
+        author: kuzzzya99
+        changes:
+          - createTable:
+              tableName: options
+              columns:
+                - column:
+                    name: id
+                    type: BIGINT
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: field_id
+                    type: BIGINT
+                    autoIncrement: true
+                    constraints:
+                      nullable: false
+                - column:
+                    name: option
+                    type: varchar(20)
+                    constraints:
+                      nullable: false
+
+  - changeSet:
+        id: 9 #create table responses
+        author: kuzzzya99
+        changes:
+          - createTable:
+              tableName: responses
+              columns:
+                - column:
+                    name: id
+                    type: BIGINT
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: worksheet_id
+                    type: BIGINT
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: field_id
+                    type: BIGINT
+                    constraints:
+                      nullable: false
+                - column:
+                    name: user_id
+                    type: BIGINT
+                    constraints:
+                      nullable: false
+                - column:
+                    name: answer
+                    type: varchar(50)
+
+  - changeSet:
+      id: 10 #add foreign keys
+      author: kuzzzya99
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames:  user_id
+            baseTableName:   fields
+            constraintName: fk_user_id_field
+            referencedColumnNames:  id
+            referencedTableName:  users
+        - addForeignKeyConstraint:
+            baseColumnNames:  type_id
+            baseTableName:   fields
+            constraintName: fk_type_field
+            referencedColumnNames:  id
+            referencedTableName:  type
+        - addForeignKeyConstraint:
+            baseColumnNames:  field_id
+            baseTableName:   options
+            constraintName: fk_option_id_field
+            referencedColumnNames:  id
+            referencedTableName:  fields
+        - addForeignKeyConstraint:
+            baseColumnNames:  field_id
+            baseTableName:   responses
+            constraintName: fk_response_id_field
+            referencedColumnNames:  id
+            referencedTableName:  fields
+        - addForeignKeyConstraint:
+            baseColumnNames:  user_id
+            baseTableName:   responses
+            constraintName: fk_response_id_user
+            referencedColumnNames:  id
+            referencedTableName:  users
+
+  - changeSet:
+      id: 11 #create table members
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: members
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: raised_hand
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 12 #add foreign keys
+      author: kuzzzya99
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames:  user_id
+            baseTableName:   members
+            constraintName: fk_user_id_members
+            referencedColumnNames:  id
+            referencedTableName:  users
+
+  - changeSet:
+      id: 13 #create table files
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: files
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rate
+                  type: BIGINT
+              - column:
+                  name: owner_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 14 #create table comments
+      author: kuzzzya99
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 15 #add foreign keys
+      author: kuzzzya99
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames:  owner_id
+            baseTableName:   files
+            constraintName: fk_owner_id_files
+            referencedColumnNames:  id
+            referencedTableName:  users
+        - addForeignKeyConstraint:
+            baseColumnNames:  file_id
+            baseTableName:   comments
+            constraintName: fk_file_id_files
+            referencedColumnNames:  id
+            referencedTableName:  files
+        - addForeignKeyConstraint:
+            baseColumnNames:  username
+            baseTableName:   comments
+            constraintName: fk_username_id_comments
+            referencedColumnNames:  id
+            referencedTableName:  users

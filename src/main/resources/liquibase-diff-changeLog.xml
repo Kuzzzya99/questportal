@@ -1,0 +1,107 @@
+    <changeSet author="dkuzm (generated)" id="1595630891792-1">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="role_id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="rolePK"/>
+            </column>
+            <column name="type" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-2">
+        <createTable tableName="user_role">
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-3">
+        <addColumn tableName="users">
+            <column defaultValue="nextval(users_user_id_seq'::regclass)" name="user_id" type="int4">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-4">
+        <addPrimaryKey columnNames="user_id, role_id" tableName="user_role"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-5">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="FK_apcc8lxk2xnug8377fatvbn04" deferrable="false" initiallyDeferred="false" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-6">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="FK_it77eq964jhfqtu54081ebtio" deferrable="false" initiallyDeferred="false" referencedColumnNames="role_id" referencedTableName="role"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-7">
+        <dropSequence sequenceName="users_id_seq"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-8">
+        <dropColumn columnName="id" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-9">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="first_name" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-10">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="last_name" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-11">
+        <addNotNullConstraint columnDataType="int" columnName="phone_number" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595630891792-12">
+        <dropPrimaryKey tableName="users"/>
+        <addPrimaryKey columnNames="user_id" constraintName="usersPK" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-1">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="role_id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="rolePK"/>
+            </column>
+            <column name="type" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-2">
+        <createTable tableName="user_role">
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-3">
+        <addColumn tableName="users">
+            <column defaultValue="nextval(users_user_id_seq'::regclass)" name="user_id" type="int4">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-4">
+        <addPrimaryKey columnNames="user_id, role_id" tableName="user_role"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-5">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="FK_apcc8lxk2xnug8377fatvbn04" deferrable="false" initiallyDeferred="false" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-6">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="FK_it77eq964jhfqtu54081ebtio" deferrable="false" initiallyDeferred="false" referencedColumnNames="role_id" referencedTableName="role"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-7">
+        <dropSequence sequenceName="users_id_seq"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-8">
+        <dropColumn columnName="id" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-9">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="first_name" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-10">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="last_name" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-11">
+        <addNotNullConstraint columnDataType="int" columnName="phone_number" tableName="users"/>
+    </changeSet>
+    <changeSet author="dkuzm (generated)" id="1595632573360-12">
+        <dropPrimaryKey tableName="users"/>
+        <addPrimaryKey columnNames="user_id" constraintName="usersPK" tableName="users"/>
+    </changeSet>
+</databaseChangeLog>
